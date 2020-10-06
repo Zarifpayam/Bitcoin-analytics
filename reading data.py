@@ -5,6 +5,7 @@ import statsmodels as sm
 import datetime as dt
 import matplotlib.pyplot as plt
 import json
+import tensorflow as tf
 
 pd.set_option('display.max_columns',13)
 pd.set_option('display.width',1820)
@@ -23,12 +24,14 @@ with open(r'C:\Users\User\Desktop\Bitcoin serious\hash-rate.json') as f1:
     d1=json.load(f1)
 hashrate = pd.json_normalize(d1)
 hashrate.t = hashrate.t.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+hashrate.v=hashrate.v.values.astype(float)
 #print(hashrate)
 
 with open(r'C:\Users\User\Desktop\Bitcoin serious\difficulty.json') as f1:
     d2=json.load(f1)
 difficulty = pd.json_normalize(d2)
 difficulty.t= difficulty.t.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+difficulty.v=difficulty.v.values.astype(float)
 #print(difficulty)
 
 Timebb = pd.read_json(r'C:\Users\User\Desktop\Bitcoin serious\Time between blocks.json')
@@ -67,3 +70,6 @@ data=Txnperminute.set_index('Time').join(blocksize.set_index('t')).join(hashrate
     .join(Marketcap.set_index('Timestamp')).join(txnvalue.set_index('Timestamp')).join(price[['Time','pd']].set_index('Time'))
 
 print(data.info())
+target = data.pop('pd')
+
+dataset = tf.data.Dataset.from_tensor_slices((data.values, target.values))
