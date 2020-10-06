@@ -50,7 +50,11 @@ txnvalue= pd.read_csv(r'C:\Users\User\Desktop\Bitcoin serious\estimated-transact
 txnvalue.Timestamp = txnvalue.Timestamp.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
 print(txnvalue)
 
-price= pd.read_csv(r'C:\Users\User\Desktop\Bitcoin serious\price by venue.csv', sep=',')
+Txnperminute= pd.read_csv(r'C:\Users\User\Desktop\Bitcoin serious\Trades-per-minute.csv', sep=',')
+Txnperminute.Time = Txnperminute.Time.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%d %H:%M:%S UTC"))
+print(Txnperminute)
+
+price= pd.read_csv(r'C:\Users\User\Desktop\Bitcoin serious\price_by_venue.csv', sep=',')
 price.Time = price.Time.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%d %H:%M:%S UTC"))
 price['%chng_kraken']= price['kraken'].pct_change()
 price['pd'] = np.where(price['%chng_kraken'] > 0 ,1,-1)
