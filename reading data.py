@@ -1,11 +1,10 @@
 import numpy as np
 import pandas as pd
-import scipy.stats as sp
-import statsmodels as sm
 import datetime as dt
 import matplotlib.pyplot as plt
 import json
-import tensorflow as tf
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 pd.set_option('display.max_columns',13)
 pd.set_option('display.width',1820)
@@ -57,7 +56,7 @@ Marketcap.Timestamp = Marketcap.Timestamp.apply(lambda x:dt.datetime.strptime(x,
 
 txnvalue= pd.read_csv(r'C:\Users\User\Desktop\Bitcoin serious\estimated-transaction-volume-usd.csv', sep=',')
 txnvalue.Timestamp = txnvalue.Timestamp.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%d %H:%M:%S").date())
-print('txnvalue',txnvalue)
+#print('txnvalue',txnvalue)
 
 price= pd.read_csv(r'C:\Users\User\Desktop\Bitcoin serious\price_by_venue.csv', sep=',')
 price.Time = price.Time.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%d %H:%M:%S UTC"))
@@ -68,8 +67,24 @@ price['pd'] = np.where(price['%chng_kraken'] > 0 ,1,-1)
 data=Txnperminute.set_index('Time').join(blocksize.set_index('t')).join(hashrate.set_index('t'),rsuffix='hashrate')\
     .join(difficulty.set_index('t'),rsuffix='difficulty').join(Timebb.set_index('t'),rsuffix='Timebb').join(TXNconfirmed.set_index('Timestamp')).join(mempooltxn.set_index('Timestamp'))\
     .join(Marketcap.set_index('Timestamp')).join(txnvalue.set_index('Timestamp')).join(price[['Time','pd']].set_index('Time'))
-
-print(data.info())
+#print(data.info())
 target = data.pop('pd')
+data = data.fillna(method='ffill')
+columns_names = pd.Series(data.columns)
+print(columns_names)
+X = data
+Y = target
+print(f'Dataset X shape: {X.shape}')
+print(f'Dataset y shape: {Y.shape}')
 
-dataset = tf.data.Dataset.from_tensor_slices((data.values, target.values))
+(X_train, X_test, y_train, y_test) = train_test_split(X, Y, test_size=0.35, random_state=1)
+lr = LogisticRegression()
+lr.fit(X_train, y_train)
+
+print(f"Intercept per class: {lr.intercept_}\n")
+print(f"Coeficients per class: {lr.coef_}\n")
+
+print(f"Available classes: {lr.classes_}\n")
+print(f"Named Coeficients for class 1: {pd.DataFrame(lr.coef_[0], columns_names)}\n")
+
+print(f"Number of iterations generating model: {lr.n_iter_}")
