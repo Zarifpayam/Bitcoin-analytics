@@ -62,7 +62,7 @@ def create_data_object():
     price= pd.read_csv(r'bitcoin_serious/price_by_venue.csv', sep=',')
     price.Time = price.Time.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%d %H:%M:%S UTC"))
     price['%chng_kraken']= price['kraken'].pct_change()
-    price['pd'] = np.where(price['%chng_kraken'] > 0 ,1,-1)
+    price['pd'] = np.where(price['%chng_kraken'] > 0 ,1,0)
     #print(price)
 
     data=Txnperminute.set_index('Time').join(blocksize.set_index('t')).join(hashrate.set_index('t'),rsuffix='hashrate')\
