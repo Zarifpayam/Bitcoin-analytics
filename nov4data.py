@@ -34,11 +34,6 @@ def create_data_object():
     exchangebal.value = exchangebal.value.values.astype(float)
    # print(exchangebal)
 
-    Feeratio = pd.read_csv(
-        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\fee-ratio-multiple-frm.csv', sep=',')
-    Feeratio.timestamp = Feeratio.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
-    print(Feeratio.info())
-
     lthmvrv = pd.read_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\lth-mvrv.csv',
                              sep=',')
     lthmvrv.timestamp = lthmvrv.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
@@ -50,10 +45,6 @@ def create_data_object():
         lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
     #print(minerstoexchanges)
 
-    mvrvratio = pd.read_csv(
-        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\mvrv-ratio.csv', sep=',')
-    mvrvratio.timestamp = mvrvratio.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
-    #print(mvrvratio)
 
     receivingent = pd.read_csv(
         r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\receiving-entities.csv', sep=',')
@@ -146,25 +137,82 @@ def create_data_object():
     price['pd'] = np.where(price['c'] > 0 ,1,0)
     #print(price)
 
+    asopr = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\a-sopr.csv', sep=',')
+    asopr.timestamp = asopr.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    asopr.value = asopr.value.values.astype(float)
+    # print(percentutxosinprofit)
 
-    # data=minerstoexchanges.set_index('timestamp')\
-    #     .join(accumbal.set_index('timestamp'),rsuffix=' accumbal')\
-    #     .join(entgrowth.set_index('timestamp'),rsuffix=' entgrowth')\
-    #     .join(Uprofit.set_index('timestamp'),rsuffix=' Uprofit')\
-    #     .join(exchangebal.set_index('timestamp'),rsuffix=' exchangebal')\
-    #     .join(Feeratio.set_index('timestamp'),rsuffix=' Feeratio')\
-    #     .join(lthmvrv.set_index('timestamp'),rsuffix=' lthmvrv')\
-    #     .join(sendingent[['timestamp','delta']].set_index('timestamp'))\
-    #     .join(price[['timestamp','pd','c']].set_index('timestamp'))
-    # print(data.info())
+    Blockinterval = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\block-interval-mean.csv', sep=',')
+    Blockinterval.timestamp = Blockinterval.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    Blockinterval.value = Blockinterval.value.values.astype(float)
+    # print(percentutxosinprofit)
 
-    data1=sendingent[['timestamp','delta']].set_index('timestamp')\
-        .join(Feeratio.set_index('timestamp'))\
+    minedblock = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\blocks-mined.csv', sep=',')
+    minedblock.timestamp = minedblock.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    minedblock.value = minedblock.value.values.astype(float)
+    # print(percentutxosinprofit)
+
+    circulatingsupply = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\circulating-supply.csv', sep=',')
+    circulatingsupply.timestamp = circulatingsupply.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    circulatingsupply.value = circulatingsupply.value.values.astype(float)
+    # print(percentutxosinprofit)
+
+    FRM = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\fee-ratio-multiple-frm.csv', sep=',')
+    FRM.timestamp = FRM.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    FRM.value = FRM.value.values.astype(float)
+
+    feestotal = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\fees-total.csv', sep=',')
+    feestotal.timestamp = feestotal.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    feestotal.value = feestotal.value.values.astype(float)
+
+    # hodlwaves = pd.read_csv(
+    #     r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\hodl-waves.csv', sep=',')
+    # hodlwaves.timestamp = hodlwaves.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    # hodlwaves.value = hodlwaves.value.values.astype(float)
+
+    liveliness = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\liveliness.csv', sep=',')
+    liveliness.timestamp = liveliness.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    liveliness.value = liveliness.value.values.astype(float)
+
+    mvrvratio = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\mvrv-ratio.csv', sep=',')
+    mvrvratio.timestamp = mvrvratio.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    mvrvratio.value = mvrvratio.value.values.astype(float)
+
+
+    txncount = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\transaction-count.csv', sep=',')
+    txncount.timestamp = txncount.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    txncount.value = txncount.value.values.astype(float)
+
+    volume = pd.read_csv(
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\transfer-volume-total.csv', sep=',')
+    volume.timestamp = volume.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    volume.value = volume.value.values.astype(float)
+
+    tempdata = feestotal.set_index('timestamp').join(minedblock.set_index('timestamp'),rsuffix='mb')\
+        .join(transactioncount.set_index('timestamp'),rsuffix='tc').join(volume.set_index('timestamp'),rsuffix='v')\
+        .join(circulatingsupply.set_index('timestamp'),rsuffix='cs')
+
+
+    tempdata['feepertxn'] = tempdata['value']/tempdata['valuetc']
+    tempdata['feeperblock']= tempdata['value']/tempdata['valuemb']
+    tempdata['volumepertxn'] = tempdata['valuev']/tempdata['valuetc']
+    tempdata['supplypervol'] = tempdata['valuecs']/tempdata['valuev']
+    print(tempdata)
+
+    data2=sendingent[['timestamp','delta']].set_index('timestamp')\
+        .join(FRM.set_index('timestamp'))\
         .join(accumbal.set_index('timestamp'),rsuffix=' accumbal')\
         .join(entgrowth.set_index('timestamp'),rsuffix=' entgrowth')\
-        .join(Uprofit.set_index('timestamp'),rsuffix=' Uprofit')\
         .join(addresseswithbalanceover100.set_index('timestamp'),rsuffix=' addresseswithbalanceover100')\
-        .join(Feeratio.set_index('timestamp'),rsuffix=' Feeratio')\
         .join(marketcaptothermocapratio.set_index('timestamp'),rsuffix=' marketcaptothermocapratio')\
         .join(asol.set_index('timestamp'),rsuffix='asol') \
         .join(puellmultiple.set_index('timestamp'), rsuffix='puellmultiple') \
@@ -172,11 +220,17 @@ def create_data_object():
         .join(stocktoflowdeflection.set_index('timestamp'), rsuffix='stocktoflowdeflection')\
         .join(relativeunrealizedprofit.set_index('timestamp'), rsuffix='relativeunrealizedprofit') \
         .join(blocksizemean.set_index('timestamp'), rsuffix='blocksizemean')\
-        .join(blockintervalmean.set_index('timestamp'), rsuffix='blockintervalmean') \
         .join(transactioncount.set_index('timestamp'), rsuffix='transactioncount') \
         .join(percentutxosinprofit.set_index('timestamp'), rsuffix='percentutxosinprofit') \
+        .join(tempdata['feepertxn'], rsuffix='feepertxn')\
+        .join(tempdata['feeperblock'],rsuffix='feeperblock')\
+        .join(tempdata['volumepertxn'],rsuffix='volumepertxn')\
+        .join(tempdata['supplypervol'],rsuffix='supplypervol')\
+        .join(blockintervalmean.set_index('timestamp'), rsuffix='blockinterval')\
+        .join(mvrvratio.set_index('timestamp'), rsuffix='mvrvratio')\
+        .join(asopr.set_index('timestamp'), rsuffix='asopr')\
         .join(price[['timestamp','pd','c']].set_index('timestamp'))
-    print(data1.info())
+    print(data2.info())
 
  #   data.to_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\data.csv', sep=',')
-    return data1
+    return data2

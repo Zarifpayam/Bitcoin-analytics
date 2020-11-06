@@ -1,25 +1,38 @@
 import numpy as np
 import pandas as pd
-import datetime as dt
 import matplotlib.pyplot as plt
-import json
+import statsmodels.graphics.api as smg
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_curve, classification_report, confusion_matrix
+from sklearn.metrics import roc_auc_score
 import data_utils
+import nov4data
+
 
 def main():
-    data = data_utils.create_data_object()
+    data2 = nov4data.create_data_object()
+    target = data2.pop('pd')
+    data2 = data2.fillna(method='bfill')
+    print(data2.info())
+    columns_names = pd.Series(data2.columns)
+    print(data2)
+    smg.plot_corr(data2.corr(), xnames=columns_names)
+    plt.show()
 
-    target = data.pop('pd')
-    data = data.fillna(method='ffill')
-    columns_names = pd.Series(data.columns)
-    X = data
-    Y = target
+    X = data2
+    y = target
 
-    (X_train, X_test, y_train, y_test) = train_test_split(X, Y, test_size=0.35, random_state=1)
+    (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.20, random_state=1)
     lr = LogisticRegression()
     lr.fit(X_train, y_train)
-    
+    y_pred = lr.predict(X_test)
+    y_prob = lr.predict_proba(X_test)[:1]
+    # fpr,tpr,thresholds  = roc_curve(y_test,y_prob)
+
+    print(confusion_matrix(y_test,y_pred))
+    print(classification_report(y_test,y_pred))
+    # print(roc_auc_score(y_test,y_prob))
     print(f"\ntrain error: {lr.score(X_train, y_train)}\n")
     print(f"test error error: {lr.score(X_test, y_test)}\n")
     print(f"Intercept per class: {lr.intercept_}\n")
@@ -27,5 +40,5 @@ def main():
     print(f"Available classes: {lr.classes_}\n")
     print(f"Named Coeficients for class 1: {pd.DataFrame(lr.coef_[0], columns_names)}\n")
     print(f"Number of iterations generating model: {lr.n_iter_}")
-
+    # print(fpr)
 main()
