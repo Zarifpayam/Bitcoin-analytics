@@ -7,11 +7,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_curve, classification_report, confusion_matrix
 from sklearn.metrics import roc_auc_score
 import data_utils
-import nov4data
+import data
 
 
 def main():
-    data2 = nov4data.create_data_object()
+    data2 = data.create_data_object()
     target = data2.pop('pd')
     data2 = data2.fillna(method='bfill')
     print(data2.info())
