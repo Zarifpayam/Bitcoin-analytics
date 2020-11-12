@@ -8,22 +8,22 @@ from sklearn.metrics import roc_curve, classification_report, confusion_matrix
 from sklearn.metrics import roc_auc_score
 import data_utils
 import data
-
+import Feature_Selection
 
 def main():
-    data2 = data.create_data_object()
+    data2 = Feature_Selection.Feature_select()
+ #   print(data2.info())
     target = data2.pop('pd')
     data2 = data2.fillna(method='bfill')
-    print(data2.info())
+  #  print('data2info',data2.info())
     columns_names = pd.Series(data2.columns)
-    print(data2)
     smg.plot_corr(data2.corr(), xnames=columns_names)
     plt.show()
 
     X = data2
     y = target
 
-    (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.20, random_state=1)
+    (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.25, random_state=1)
     lr = LogisticRegression()
     lr.fit(X_train, y_train)
     y_pred = lr.predict(X_test)

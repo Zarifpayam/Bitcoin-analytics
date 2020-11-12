@@ -73,7 +73,7 @@ def load_indicator_data():
     # print(blockintervalmean)
 
     transactioncount = pd.read_csv(
-        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\transaction-count.csv', sep=',')
+        r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov7\transaction-count.csv', sep=',')
     transactioncount.timestamp = transactioncount.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
     transactioncount.value = transactioncount.value.values.astype(float)
     # print(transactioncount)
@@ -86,17 +86,20 @@ def load_indicator_data():
 
     sendingent = pd.read_csv(
         r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\sending-entities.csv', sep=',')
-    sendingent.timestamp = sendingent.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+    sendingent.timestamp = sendingent.timestamp.apply(lambda x: dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ").date())
     sendingent.value = sendingent.value.values.astype(float)
-    # print(receivingent)
+    sendingent = sendingent.set_index('timestamp')
     sendingent['delta'] = receivingent['value'] - sendingent['value']
-    #print(sendingent)
 
-    price= pd.read_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Oct28\price.csv', sep=',')
-    price.timestamp = price.timestamp.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ"))
+
+    price= pd.read_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\nov7\price.csv', sep=',')
+    price.timestamp = price.timestamp.apply(lambda x:dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%SZ").date())
+    price=price.groupby(['timestamp']).max()
     price['c']= price['c'].pct_change()
     price['pd'] = np.where(price['c'] > 0 ,1,0)
-    #print(price)
+
+
+    #price.to_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\nov7\price1.csv', sep=',')
 
     asopr = pd.read_csv(
         r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov4\a-sopr.csv', sep=',')
@@ -161,7 +164,9 @@ def load_indicator_data():
     tempdata['feeperblock']= tempdata['value']/tempdata['valuemb']
     tempdata['volumepertxn'] = tempdata['valuev']/tempdata['valuetc']
     tempdata['supplypervol'] = tempdata['valuecs']/tempdata['valuev']
-    print(tempdata)
+    tempdata=tempdata[tempdata.index>'2011-01-17']
+
+    #tempdata.to_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\nov7\tempdata.csv', sep=',')
 
     return addresseswithbalanceover100,marketcaptothermocapratio,asol,reserverisk,puellmultiple,\
            nvtsignal,relativeunrealizedprofit,stocktoflowdeflection,blocksizemean,blockintervalmean,\
