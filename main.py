@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_curve, classification_report, confusion_matrix
 from sklearn.metrics import roc_auc_score
-import data_utils
 import data
 import Feature_Selection
 
