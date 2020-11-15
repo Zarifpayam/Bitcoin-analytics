@@ -15,8 +15,6 @@ def Feature_select():
     # apply SelectKBest Chi2 class to extract top 10 best features
     n = 7
     bestfeatures = SelectKBest(score_func=f_classif, k = n)
-    print(bestfeatures)
-
     fit = bestfeatures.fit(data2, target)
     dfscores = pd.DataFrame(fit.scores_)
     dfcolumns = pd.DataFrame(data2.columns)
