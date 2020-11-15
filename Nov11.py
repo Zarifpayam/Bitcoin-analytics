@@ -118,5 +118,6 @@ def load_indicator_data():
     relativeunrealizedprofit = relativeunrealizedprofit.set_index('timestamp')
     relativeunrealizedprofit = relativeunrealizedprofit.rename(columns={'value':'RelativeUprofit'})
 
+
     return feestotal,minedblock,transactioncount,volume,circulatingsupply,price,RCHodlewave,sendingent,percentutxosinprofit,FRM,asopr,\
            mvrvratio,liveliness,puellmultiple,nvtsignal,relativeunrealizedprofit

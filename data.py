@@ -54,10 +54,10 @@ def create_data_object():
     tempdata=tempdata[tempdata.index>'2015-01-17']
 
 
-    data2=tempdata[['feepertxn','volumepertxn','feeperblock','supplypervol','%UTXOinprofit','FRM','mvrv','liveliness','nvtsig','RelativeUprofit','Puell']]\
+    data2=tempdata[['feepertxn','volumepertxn','feeperblock','supplypervol','%UTXOinprofit','FRM','mvrv','liveliness','nvtsig','RelativeUprofit','Puell','delta']]\
     .join(price[['pd','stdev']])
 
     data2=data2[data2['stdev']<0.07]
 
-    data2.to_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov11\data.csv', sep=',')
+#    data2.to_csv(r'C:\Users\User\Google Drive\Boule cristale de Bitcoin\Bitcoin serious\Nov11\data.csv', sep=',')
     return data2
