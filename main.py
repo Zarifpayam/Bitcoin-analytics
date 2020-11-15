@@ -18,8 +18,9 @@ def main():
     #correltaion analysis
     columns_names = pd.Series(data_fs.columns)
     smg.plot_corr(data_fs.corr(), xnames=columns_names)
-
+    plt.show()
     pd.plotting.scatter_matrix(data_fs, marker='O')
+    plt.show()
 
     #Drop one of the 2 features whose correlation is above 0.9
     corr_matrix=data_fs.corr().abs()
