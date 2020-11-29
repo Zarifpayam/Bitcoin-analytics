@@ -1,6 +1,4 @@
-bitcoin_serious
-data_utils.py
-nov4data.py
-bac.py
+data/*
+.idea
 .vscode
 __pycache__

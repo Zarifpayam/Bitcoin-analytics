@@ -1,7 +1,7 @@
 # This is the config file for the crypto data fetcher (Glassnode API)
 
 API_KEY=""
-OUTPUT_DIR="./output"
+OUTPUT_DIR="../../data"
 DOWNLOAD_DIR="./downloads"
 
 endpoints_list="/v1/metrics/transactions/count
